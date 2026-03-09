@@ -1,7 +1,7 @@
 # Task 007: Define the Verifier Sub-Agent
 
 **Priority**: High  
-**Status**: Pending  
+**Status**: Completed  
 **Depends on**: ADR-001
 
 ---
@@ -76,15 +76,15 @@ The Verifier NEVER fixes issues -- it only reports them. The orchestrator decide
 
 ## Acceptance Criteria
 
-- [ ] File created at `skills/sdd-verify/SKILL.md`
-- [ ] No references to engram, hybrid, mode resolution, or "openspec" naming
-- [ ] Persistence is always `.sdd/` directory (filesystem)
-- [ ] All 7 verification steps preserved (Completeness, Correctness, Coherence, Testing Static, Tests Real, Build, Coverage, Compliance Matrix)
-- [ ] Spec Compliance Matrix with COMPLIANT/FAILING/UNTESTED/PARTIAL preserved
-- [ ] Test runner and build command detection chains preserved
-- [ ] Full report template preserved (all sections)
-- [ ] Verdict system preserved (PASS / PASS WITH WARNINGS / FAIL)
-- [ ] Severity levels preserved (CRITICAL / WARNING / SUGGESTION)
-- [ ] Rule "NEVER fix issues, only report" preserved
-- [ ] YAML frontmatter with updated metadata
-- [ ] The structured envelope contract is preserved
+- [x] File created at `skills/sdd-verify/SKILL.md`
+- [x] No references to engram, hybrid, mode resolution, or "openspec" naming
+- [x] Persistence is always `.sdd/` directory (filesystem)
+- [x] All 7 verification steps preserved (Completeness, Correctness, Coherence, Testing Static, Tests Real, Build, Coverage, Compliance Matrix)
+- [x] Spec Compliance Matrix with COMPLIANT/FAILING/UNTESTED/PARTIAL preserved
+- [x] Test runner and build command detection chains preserved
+- [x] Full report template preserved (all sections)
+- [x] Verdict system preserved (PASS / PASS WITH WARNINGS / FAIL)
+- [x] Severity levels preserved (CRITICAL / WARNING / SUGGESTION)
+- [x] Rule "NEVER fix issues, only report" preserved
+- [x] YAML frontmatter with updated metadata
+- [x] The structured envelope contract is preserved
