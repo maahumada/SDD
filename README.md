@@ -361,7 +361,7 @@ SDD/
 └── tasks/
     ├── ADR-001-vision-and-mission.md
     ├── ADR-002-dual-entrypoint-strategy.md
-    └── 001..020 task definitions
+    └── 001..021 task definitions
 ```
 
 ---
