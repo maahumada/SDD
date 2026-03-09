@@ -1,7 +1,7 @@
 # Task 010: Create Adapter Core Router and Sync Policy
 
 **Priority**: High  
-**Status**: Pending  
+**Status**: Completed  
 **Depends on**: 009-orchestrator-core-skill.md
 
 ---
@@ -31,9 +31,9 @@ Create a single source of truth for model adapters so `AGENTS.md`, `CLAUDE.md`,
 
 ## Acceptance Criteria
 
-- [ ] `docs/adapters/sdd-router-core.md` created
-- [ ] `docs/adapters/sync-policy.md` created
-- [ ] Source-of-truth hierarchy is explicit
-- [ ] Adapter update process is explicit and actionable
-- [ ] Router behavior is compatible with command grammar from Task 008
-- [ ] No references to `engram`, `hybrid`, or `openspec` naming
+- [x] `docs/adapters/sdd-router-core.md` created
+- [x] `docs/adapters/sync-policy.md` created
+- [x] Source-of-truth hierarchy is explicit
+- [x] Adapter update process is explicit and actionable
+- [x] Router behavior is compatible with command grammar from Task 008
+- [x] No references to `engram`, `hybrid`, or `openspec` naming
