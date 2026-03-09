@@ -1,7 +1,7 @@
 # Task 005: Define the Task-Planner Sub-Agent
 
 **Priority**: High  
-**Status**: Pending  
+**Status**: Completed  
 **Depends on**: ADR-001
 
 ---
@@ -65,13 +65,13 @@ This sub-agent requires ALL three prior artifacts (proposal + specs + design). I
 
 ## Acceptance Criteria
 
-- [ ] File created at `skills/sdd-tasks/SKILL.md`
-- [ ] No references to engram, hybrid, mode resolution, or "openspec" naming
-- [ ] Persistence is always `.sdd/` directory (filesystem)
-- [ ] Phased task structure template preserved (Foundation, Core, Integration, Testing, Cleanup)
-- [ ] SAVS criteria table preserved
-- [ ] Hierarchical numbering format preserved (1.1, 1.2, 2.1...)
-- [ ] TDD integration note preserved (RED/GREEN/REFACTOR sequences)
-- [ ] Rules about concrete file paths and dependency ordering preserved
-- [ ] YAML frontmatter with updated metadata
-- [ ] The structured envelope contract is preserved
+- [x] File created at `skills/sdd-tasks/SKILL.md`
+- [x] No references to engram, hybrid, mode resolution, or "openspec" naming
+- [x] Persistence is always `.sdd/` directory (filesystem)
+- [x] Phased task structure template preserved (Foundation, Core, Integration, Testing, Cleanup)
+- [x] SAVS criteria table preserved
+- [x] Hierarchical numbering format preserved (1.1, 1.2, 2.1...)
+- [x] TDD integration note preserved (RED/GREEN/REFACTOR sequences)
+- [x] Rules about concrete file paths and dependency ordering preserved
+- [x] YAML frontmatter with updated metadata
+- [x] The structured envelope contract is preserved
