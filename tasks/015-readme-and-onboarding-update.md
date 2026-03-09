@@ -1,7 +1,7 @@
 # Task 015: Update README and Onboarding for Dual Usage Modes
 
 **Priority**: High  
-**Status**: Pending  
+**Status**: Completed  
 **Depends on**: 008-command-contract-and-grammar.md, 009-orchestrator-core-skill.md, 011-agents-md-adapter.md, 012-claude-md-adapter.md, 013-gemini-md-adapter.md, 014-opencode-adapter-and-command-pack.md
 
 ---
@@ -29,9 +29,9 @@ README updates must include:
 
 ## Acceptance Criteria
 
-- [ ] `README.md` documents both usage modes clearly
-- [ ] Command examples use canonical syntax from Task 008
-- [ ] New adapter files are linked in README
-- [ ] Onboarding path is clear for first-time users
-- [ ] Existing sub-agent architecture section remains accurate
-- [ ] No references to `engram`, `hybrid`, or `openspec` naming
+- [x] `README.md` documents both usage modes clearly
+- [x] Command examples use canonical syntax from Task 008
+- [x] New adapter files are linked in README
+- [x] Onboarding path is clear for first-time users
+- [x] Existing sub-agent architecture section remains accurate
+- [x] No references to `engram`, `hybrid`, or `openspec` naming

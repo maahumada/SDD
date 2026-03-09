@@ -4,7 +4,7 @@
 
 An orchestrator + 7 specialized AI sub-agents for building software features with specifications, design documents, and quality gates.
 
-Zero dependencies. Pure Markdown. OpenSpec persistence.
+Zero dependencies. Pure Markdown. `.sdd/` filesystem persistence.
 
 ---
 
@@ -172,53 +172,92 @@ Each sub-agent is a SKILL.md file -- pure Markdown instructions that any AI assi
 
 ---
 
+## Usage Modes
+
+SDD supports two entrypoints:
+
+1. **Command mode (deterministic)**: you run canonical `/sdd-*` commands.
+2. **Adapter mode (auto-router)**: model instruction files route complex
+   plain-language requests to SDD behavior.
+
 ## Commands
+
+Canonical grammar:
+
+```text
+/sdd-<command> [args...] [-- <free-text-prompt>]
+```
 
 | Command | What It Does |
 |---------|-------------|
-| `/sdd-explore <topic>` | Investigate an idea. Reads codebase, compares approaches. |
-| `/sdd-new <name>` | Start a new change: exploration + proposal. |
-| `/sdd-continue` | Run the next dependency-ready phase via sub-agent(s). |
-| `/sdd-ff <name>` | Fast-forward planning (proposal -> specs -> design -> tasks). |
-| `/sdd-apply` | Implement tasks in batches. Checks off items as it goes. |
-| `/sdd-verify` | Validate implementation against specs. CRITICAL / WARNING / SUGGESTION. |
+| `/sdd-explore -- <topic>` | Investigate an idea. Reads codebase, compares approaches. |
+| `/sdd-new <change-name> -- <prompt>` | Start a new change: exploration + proposal. |
+| `/sdd-continue [change-name]` | Run the next dependency-ready phase via sub-agent(s). |
+| `/sdd-ff <change-name> [-- <prompt>]` | Fast-forward planning (proposal -> specs -> design -> tasks). |
+| `/sdd-apply <change-name> [-- <task-range-or-note>]` | Implement tasks in batches. Checks off items as it goes. |
+| `/sdd-verify <change-name>` | Validate implementation against specs. CRITICAL / WARNING / SUGGESTION. |
 
-### Example Flow
+### Command Mode Example Flow
 
-```
-You: /sdd-new add-dark-mode
+```text
+You: /sdd-new add-dark-mode -- add theme toggle with system fallback and local storage persistence
 
 AI:  Launching explorer sub-agent...
      Done. React + Tailwind detected. Hardcoded light mode in globals.css.
-     
+
      Launching proposer sub-agent...
      Done. proposal.md created.
        Intent: Add dark mode toggle with system preference detection
        Scope: Theme context, toggle component, CSS variables
-     
-     Want me to continue with specs and design? (or review the proposal first)
 
-You: Go ahead
+     Proposal ready. Approve to continue with specs and design?
+
+You: /sdd-continue add-dark-mode
 
 AI:  Launching spec-writer and designer in parallel...
      Done.
-       specs/ui/spec.md -- 3 requirements, 7 scenarios
-       design.md -- CSS variables approach, React Context, localStorage
-     
-     Launching task-planner...
-     Done. tasks.md -- 3 phases, 8 tasks
-     
-     Ready to implement. Run /sdd-apply to start.
+       .sdd/changes/add-dark-mode/specs/ui/spec.md - 3 requirements, 7 scenarios
+       .sdd/changes/add-dark-mode/design.md - CSS variables approach, React Context, localStorage
 
-You: /sdd-apply
+     Launching task-planner...
+     Done. .sdd/changes/add-dark-mode/tasks.md - 3 phases, 8 tasks
+
+     Planning complete. Approve implementation?
+
+You: /sdd-apply add-dark-mode -- 1.1-1.3
 
 AI:  Implementing Phase 1 (Foundation)...
      [x] 1.1 Created ThemeContext
      [x] 1.2 Added CSS custom properties
      [x] 1.3 Added localStorage persistence
-     
-     3/8 tasks complete. Continue with Phase 2?
+
+     3/8 tasks complete. Continue with next batch?
 ```
+
+### Adapter Mode Example (No Command)
+
+```text
+You: "Necesito agregar dark mode con persistencia y quiero revisar el plan antes de implementar"
+
+AI:  This request is complex and is a good fit for SDD.
+     Recommended command:
+     /sdd-new add-dark-mode -- agregar dark mode con persistencia y revision por etapas
+```
+
+Adapter mode keeps command grammar and orchestrator behavior aligned with:
+- `docs/sdd-command-contract.md`
+- `docs/adapters/sdd-router-core.md`
+- `skills/sdd-orchestrator/SKILL.md`
+
+### Adapter Compatibility
+
+| Tooling Surface | File | Purpose |
+|-----------------|------|---------|
+| Generic adapter | `AGENTS.md` | Command-first router + SDD guardrails |
+| Claude adapter | `CLAUDE.md` | Claude-specific SDD routing guidance |
+| Gemini adapter | `GEMINI.md` | Gemini routing + inline fallback guidance |
+| OpenCode adapter | `examples/opencode/sdd-orchestrator.md` | OpenCode setup and merge instructions |
+| OpenCode commands | `examples/opencode/commands/sdd-*.md` | Slash command command-pack |
 
 ---
 
@@ -272,26 +311,33 @@ This prevents context overload (the #1 cause of AI hallucinations in long coding
 
 ```
 SDD/
-├── README.md                          <- You are here
-├── tasks/                             <- Task definitions for building this project
-│   ├── ADR-001-vision-and-mission.md  <- Architecture decision record
-│   ├── 001-explorer-subagent.md       <- Task: define Explorer
-│   ├── 002-proposer-subagent.md       <- Task: define Proposer
-│   ├── 003-spec-writer-subagent.md    <- Task: define Spec-Writer
-│   ├── 004-designer-subagent.md       <- Task: define Designer
-│   ├── 005-task-planner-subagent.md   <- Task: define Task-Planner
-│   ├── 006-implementer-subagent.md    <- Task: define Implementer
-│   └── 007-verifier-subagent.md       <- Task: define Verifier
-└── skills/                            <- (to be created) The 7 sub-agent skill files
-    ├── _shared/
-    │   └── sdd-convention.md          <- Filesystem paths & structure
-    ├── sdd-explore/SKILL.md
-    ├── sdd-propose/SKILL.md
-    ├── sdd-spec/SKILL.md
-    ├── sdd-design/SKILL.md
-    ├── sdd-tasks/SKILL.md
-    ├── sdd-apply/SKILL.md
-    └── sdd-verify/SKILL.md
+├── README.md
+├── AGENTS.md                          <- Generic adapter
+├── CLAUDE.md                          <- Claude adapter
+├── GEMINI.md                          <- Gemini adapter
+├── docs/
+│   ├── sdd-command-contract.md        <- Canonical /sdd-* grammar
+│   └── adapters/
+│       ├── sdd-router-core.md         <- Adapter routing policy
+│       └── sync-policy.md             <- Source-of-truth and sync process
+├── examples/
+│   └── opencode/
+│       ├── opencode.json
+│       ├── sdd-orchestrator.md
+│       └── commands/sdd-*.md
+├── skills/
+│   ├── sdd-orchestrator/SKILL.md
+│   ├── sdd-explore/SKILL.md
+│   ├── sdd-propose/SKILL.md
+│   ├── sdd-spec/SKILL.md
+│   ├── sdd-design/SKILL.md
+│   ├── sdd-tasks/SKILL.md
+│   ├── sdd-apply/SKILL.md
+│   └── sdd-verify/SKILL.md
+└── tasks/
+    ├── ADR-001-vision-and-mission.md
+    ├── ADR-002-dual-entrypoint-strategy.md
+    └── 001..020 task definitions
 ```
 
 ---
@@ -302,10 +348,10 @@ This project is heavily inspired by [Agent Teams Lite](https://github.com/gentle
 
 | | Agent Teams Lite | SDD |
 |---|---|---|
-| **Persistence** | Pluggable (engram/openspec/hybrid/none) | `.sdd/` directory only (filesystem) |
+| **Persistence** | Pluggable multi-backend modes | `.sdd/` directory only (filesystem) |
 | **Roles** | 9 (includes Init + Archive) | 7 (core workflow roles) |
 | **Mode resolution** | Complex multi-backend logic | None needed -- always filesystem |
-| **Shared conventions** | 3 files (persistence, engram, openspec) | 1 file (sdd convention) |
+| **Shared conventions** | Multiple backend-specific conventions | Focused SDD conventions only |
 | **Philosophy** | Maximum flexibility | Maximum simplicity |
 
 ---
