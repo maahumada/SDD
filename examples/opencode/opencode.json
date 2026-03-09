@@ -1,0 +1,16 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "agent": {
+    "sdd-orchestrator": {
+      "mode": "all",
+      "description": "SDD orchestrator adapter for command-first workflows",
+      "prompt": "Use docs/sdd-command-contract.md for parsing, docs/adapters/sdd-router-core.md for routing behavior, and skills/sdd-orchestrator/SKILL.md for orchestration. Delegate phase work to sdd-* sub-agents; do not perform phase content inline.",
+      "tools": {
+        "read": true,
+        "write": true,
+        "edit": true,
+        "bash": true
+      }
+    }
+  }
+}

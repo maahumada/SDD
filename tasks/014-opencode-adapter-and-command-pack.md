@@ -1,7 +1,7 @@
 # Task 014: Add OpenCode Adapter and Command Pack
 
 **Priority**: Medium  
-**Status**: Pending  
+**Status**: Completed  
 **Depends on**: 009-orchestrator-core-skill.md, 010-adapter-core-router-and-sync-policy.md
 
 ---
@@ -28,8 +28,8 @@ Provide:
 
 ## Acceptance Criteria
 
-- [ ] OpenCode command files exist for all canonical SDD commands
-- [ ] Command files follow the same grammar as Task 008
-- [ ] Adapter snippet references orchestrator skill and core router docs
-- [ ] Setup instructions include both new setup and merge-into-existing-config
-- [ ] No references to `engram`, `hybrid`, or `openspec` naming
+- [x] OpenCode command files exist for all canonical SDD commands
+- [x] Command files follow the same grammar as Task 008
+- [x] Adapter snippet references orchestrator skill and core router docs
+- [x] Setup instructions include both new setup and merge-into-existing-config
+- [x] No references to `engram`, `hybrid`, or `openspec` naming
