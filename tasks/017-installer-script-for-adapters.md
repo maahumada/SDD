@@ -1,7 +1,7 @@
 # Task 017: Build Installer Script for Project Adapters
 
 **Priority**: High  
-**Status**: Pending  
+**Status**: Completed  
 **Depends on**: 016-adapter-template-pack.md
 
 ---
@@ -39,9 +39,9 @@ Required flags:
 
 ## Acceptance Criteria
 
-- [ ] File created at `scripts/sdd-install.sh`
-- [ ] Installer supports required flags and validates input
-- [ ] Installer is idempotent (second run does not duplicate content)
-- [ ] Existing files are preserved outside SDD-managed blocks
-- [ ] Backups are created unless `--no-backup` is passed
-- [ ] Script includes usage/help output
+- [x] File created at `scripts/sdd-install.sh`
+- [x] Installer supports required flags and validates input
+- [x] Installer is idempotent (second run does not duplicate content)
+- [x] Existing files are preserved outside SDD-managed blocks
+- [x] Backups are created unless `--no-backup` is passed
+- [x] Script includes usage/help output
