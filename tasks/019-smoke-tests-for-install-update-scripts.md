@@ -1,7 +1,7 @@
 # Task 019: Add Smoke Tests for Install and Update Scripts
 
 **Priority**: Medium  
-**Status**: Pending  
+**Status**: Completed  
 **Depends on**: 017-installer-script-for-adapters.md, 018-update-script-and-version-stamp.md
 
 ---
@@ -27,9 +27,9 @@ Validate at least:
 
 ## Acceptance Criteria
 
-- [ ] Smoke test script exists and is runnable locally
-- [ ] Fixture project(s) included for deterministic checks
-- [ ] Idempotency is asserted
-- [ ] Managed-block-only updates are asserted
-- [ ] Dry-run mode is asserted as non-destructive
-- [ ] Test output clearly reports pass/fail per scenario
+- [x] Smoke test script exists and is runnable locally
+- [x] Fixture project(s) included for deterministic checks
+- [x] Idempotency is asserted
+- [x] Managed-block-only updates are asserted
+- [x] Dry-run mode is asserted as non-destructive
+- [x] Test output clearly reports pass/fail per scenario
