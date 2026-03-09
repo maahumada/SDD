@@ -1,7 +1,7 @@
 # Task 003: Define the Spec-Writer Sub-Agent
 
 **Priority**: High  
-**Status**: Pending  
+**Status**: Completed  
 **Depends on**: ADR-001
 
 ---
@@ -64,13 +64,13 @@ The spec-writer can run in **parallel** with the designer (both depend on the pr
 
 ## Acceptance Criteria
 
-- [ ] File created at `skills/sdd-spec/SKILL.md`
-- [ ] No references to engram, hybrid, mode resolution, or "openspec" naming
-- [ ] Persistence is always `.sdd/` directory (filesystem)
-- [ ] Delta spec format preserved (ADDED/MODIFIED/REMOVED with Given/When/Then)
-- [ ] Full spec format for new domains preserved
-- [ ] RFC 2119 keywords reference preserved
-- [ ] Rules about testable scenarios and no implementation details preserved
-- [ ] YAML frontmatter with updated metadata
-- [ ] The structured envelope contract is preserved
-- [ ] Note about parallelism with Designer is included
+- [x] File created at `skills/sdd-spec/SKILL.md`
+- [x] No references to engram, hybrid, mode resolution, or "openspec" naming
+- [x] Persistence is always `.sdd/` directory (filesystem)
+- [x] Delta spec format preserved (ADDED/MODIFIED/REMOVED with Given/When/Then)
+- [x] Full spec format for new domains preserved
+- [x] RFC 2119 keywords reference preserved
+- [x] Rules about testable scenarios and no implementation details preserved
+- [x] YAML frontmatter with updated metadata
+- [x] The structured envelope contract is preserved
+- [x] Note about parallelism with Designer is included
