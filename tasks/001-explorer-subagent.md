@@ -1,7 +1,7 @@
 # Task 001: Define the Explorer Sub-Agent
 
 **Priority**: High  
-**Status**: Pending  
+**Status**: Completed  
 **Depends on**: ADR-001
 
 ---
@@ -71,11 +71,11 @@ Before starting:
 
 ## Acceptance Criteria
 
-- [ ] File created at `skills/sdd-explore/SKILL.md`
-- [ ] No references to engram, hybrid, mode resolution, or "openspec" naming
-- [ ] Persistence is always `.sdd/` directory (filesystem)
-- [ ] The 5-step exploration process is preserved
-- [ ] The structured return template is preserved
-- [ ] All rules about read-only behavior are preserved
-- [ ] YAML frontmatter is present with updated metadata
-- [ ] The structured envelope contract (status, executive_summary, etc.) is preserved
+- [x] File created at `skills/sdd-explore/SKILL.md`
+- [x] No references to engram, hybrid, mode resolution, or "openspec" naming
+- [x] Persistence is always `.sdd/` directory (filesystem)
+- [x] The 5-step exploration process is preserved
+- [x] The structured return template is preserved
+- [x] All rules about read-only behavior are preserved
+- [x] YAML frontmatter is present with updated metadata
+- [x] The structured envelope contract (status, executive_summary, etc.) is preserved
