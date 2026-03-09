@@ -1,7 +1,7 @@
 # Task 006: Define the Implementer Sub-Agent
 
 **Priority**: High  
-**Status**: Pending  
+**Status**: Completed  
 **Depends on**: ADR-001
 
 ---
@@ -66,14 +66,14 @@ The orchestrator sends batches of tasks (e.g., "Phase 1, tasks 1.1-1.3"). The im
 
 ## Acceptance Criteria
 
-- [ ] File created at `skills/sdd-apply/SKILL.md`
-- [ ] No references to engram, hybrid, mode resolution, or "openspec" naming
-- [ ] Persistence is always `.sdd/` directory (filesystem)
-- [ ] Both TDD and Standard workflow paths preserved
-- [ ] TDD cycle preserved (UNDERSTAND -> RED -> GREEN -> REFACTOR)
-- [ ] Test runner detection chain preserved
-- [ ] Task marking mechanism preserved (`[ ]` -> `[x]`)
-- [ ] Return summary template preserved (including TDD results table)
-- [ ] Rules about reading specs first and reporting deviations preserved
-- [ ] YAML frontmatter with updated metadata
-- [ ] The structured envelope contract is preserved
+- [x] File created at `skills/sdd-apply/SKILL.md`
+- [x] No references to engram, hybrid, mode resolution, or "openspec" naming
+- [x] Persistence is always `.sdd/` directory (filesystem)
+- [x] Both TDD and Standard workflow paths preserved
+- [x] TDD cycle preserved (UNDERSTAND -> RED -> GREEN -> REFACTOR)
+- [x] Test runner detection chain preserved
+- [x] Task marking mechanism preserved (`[ ]` -> `[x]`)
+- [x] Return summary template preserved (including TDD results table)
+- [x] Rules about reading specs first and reporting deviations preserved
+- [x] YAML frontmatter with updated metadata
+- [x] The structured envelope contract is preserved
