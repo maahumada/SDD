@@ -1,7 +1,7 @@
 # Task 023: Define Extension Lifecycle Command Contract
 
 **Priority**: High  
-**Status**: Pending  
+**Status**: Completed  
 **Depends on**: 022-extension-contract-and-manifest-schema.md
 
 ---
@@ -32,8 +32,8 @@ Document:
 
 ## Acceptance Criteria
 
-- [ ] Command contract doc exists with canonical syntax
-- [ ] Each lifecycle command has argument and behavior definition
-- [ ] Validation and error behavior is explicit
-- [ ] Output format conventions are documented
-- [ ] Examples are realistic and copy-paste ready
+- [x] Command contract doc exists with canonical syntax
+- [x] Each lifecycle command has argument and behavior definition
+- [x] Validation and error behavior is explicit
+- [x] Output format conventions are documented
+- [x] Examples are realistic and copy-paste ready

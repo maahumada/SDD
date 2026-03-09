@@ -1,7 +1,7 @@
 # Task 024: Implement Extension Resolution and Precedence Policy
 
 **Priority**: High  
-**Status**: Pending  
+**Status**: Completed  
 **Depends on**: 022-extension-contract-and-manifest-schema.md, 023-extension-lifecycle-command-contract.md
 
 ---
@@ -29,8 +29,8 @@ Include worked examples of precedence resolution.
 
 ## Acceptance Criteria
 
-- [ ] Resolution policy doc exists with deterministic algorithm
-- [ ] Project config contract for enabling extensions is explicit
-- [ ] Conflict policy is unambiguous and actionable
-- [ ] Merge semantics are defined per artifact type
-- [ ] Optional lock file contract is documented (or explicitly deferred)
+- [x] Resolution policy doc exists with deterministic algorithm
+- [x] Project config contract for enabling extensions is explicit
+- [x] Conflict policy is unambiguous and actionable
+- [x] Merge semantics are defined per artifact type
+- [x] Optional lock file contract is documented (or explicitly deferred)

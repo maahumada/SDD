@@ -1,7 +1,7 @@
 # Task 022: Define Extension Contract and Manifest Schema
 
 **Priority**: High  
-**Status**: Pending  
+**Status**: Completed  
 **Depends on**: ADR-003-extension-architecture-and-governance.md
 
 ---
@@ -30,8 +30,8 @@ Include at least one full manifest example.
 
 ## Acceptance Criteria
 
-- [ ] Contract doc exists and covers layout + required files
-- [ ] Manifest schema exists and is machine-parseable
-- [ ] Required fields and validation rules are explicit
-- [ ] Dependencies/conflicts model is documented
-- [ ] At least one valid manifest example is included
+- [x] Contract doc exists and covers layout + required files
+- [x] Manifest schema exists and is machine-parseable
+- [x] Required fields and validation rules are explicit
+- [x] Dependencies/conflicts model is documented
+- [x] At least one valid manifest example is included
