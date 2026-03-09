@@ -1,7 +1,7 @@
 # Task 004: Define the Designer Sub-Agent
 
 **Priority**: High  
-**Status**: Pending  
+**Status**: Completed  
 **Depends on**: ADR-001
 
 ---
@@ -61,12 +61,12 @@ The designer can run in **parallel** with the spec-writer (both depend on propos
 
 ## Acceptance Criteria
 
-- [ ] File created at `skills/sdd-design/SKILL.md`
-- [ ] No references to engram, hybrid, mode resolution, or "openspec" naming
-- [ ] Persistence is always `.sdd/` directory (filesystem)
-- [ ] Full design.md template preserved (Technical Approach, Architecture Decisions, Data Flow, File Changes, Interfaces, Testing Strategy, Migration, Open Questions)
-- [ ] Architecture Decision format preserved (Choice, Alternatives, Rationale)
-- [ ] Rules about reading real code and following existing patterns preserved
-- [ ] YAML frontmatter with updated metadata
-- [ ] The structured envelope contract is preserved
-- [ ] Note about parallelism with Spec-Writer is included
+- [x] File created at `skills/sdd-design/SKILL.md`
+- [x] No references to engram, hybrid, mode resolution, or "openspec" naming
+- [x] Persistence is always `.sdd/` directory (filesystem)
+- [x] Full design.md template preserved (Technical Approach, Architecture Decisions, Data Flow, File Changes, Interfaces, Testing Strategy, Migration, Open Questions)
+- [x] Architecture Decision format preserved (Choice, Alternatives, Rationale)
+- [x] Rules about reading real code and following existing patterns preserved
+- [x] YAML frontmatter with updated metadata
+- [x] The structured envelope contract is preserved
+- [x] Note about parallelism with Spec-Writer is included
