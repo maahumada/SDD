@@ -1,7 +1,7 @@
 # Task 018: Add Adapter Update Script and Version Stamp
 
 **Priority**: Medium  
-**Status**: Pending  
+**Status**: Completed  
 **Depends on**: 016-adapter-template-pack.md, 017-installer-script-for-adapters.md
 
 ---
@@ -34,8 +34,8 @@ Managed block version stamp example:
 
 ## Acceptance Criteria
 
-- [ ] File created at `scripts/sdd-update.sh`
-- [ ] Update script supports `--project`, `--adapters`, and `--dry-run`
-- [ ] Managed block version stamp format is documented and applied
-- [ ] Conflicts are detected and reported without destructive overwrite
-- [ ] Update process reuses shared logic with installer where reasonable
+- [x] File created at `scripts/sdd-update.sh`
+- [x] Update script supports `--project`, `--adapters`, and `--dry-run`
+- [x] Managed block version stamp format is documented and applied
+- [x] Conflicts are detected and reported without destructive overwrite
+- [x] Update process reuses shared logic with installer where reasonable

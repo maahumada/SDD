@@ -49,7 +49,15 @@ Do not start with adapter files. Always change source files first.
 Track versions independently:
 - Command contract version in `docs/sdd-command-contract.md`.
 - Router core version in `docs/adapters/sdd-router-core.md`.
-- Adapter template version stamps once template install/update scripts are added.
+- Adapter template version stamps in managed blocks:
+
+```text
+<!-- SDD:BEGIN adapter=<ADAPTER_ID> version=<N> -->
+...
+<!-- SDD:END adapter=<ADAPTER_ID> -->
+```
+
+The installer and updater replace only managed blocks with matching adapter IDs.
 
 Recommended bump policy:
 - Major: breaking grammar or command semantics.
