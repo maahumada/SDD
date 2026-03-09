@@ -66,6 +66,11 @@ Recommended command mode examples:
 ```text
 /sdd-new add-dark-mode -- add theme toggle with persisted preference
 /sdd-continue add-dark-mode
+```
+
+Optional targeted controls (normally not needed):
+
+```text
 /sdd-apply add-dark-mode -- 1.1-1.3
 /sdd-verify add-dark-mode
 ```
@@ -84,7 +89,7 @@ Recommended command mode examples:
 
 - Use `GEMINI.md` adapter.
 - If true sub-agent delegation is unavailable, follow inline fallback while
-  preserving SDD phase order and approval gates.
+  preserving SDD phase order and automatic gate progression.
 
 ### Canonical Command Format
 
@@ -97,11 +102,11 @@ Command reference:
 | Command | What It Does |
 |---------|-------------|
 | `/sdd-explore -- <topic>` | Investigate an idea. Reads codebase, compares approaches. |
-| `/sdd-new <change-name> -- <prompt>` | Start a new change: exploration + proposal. |
-| `/sdd-continue [change-name]` | Run the next dependency-ready phase via sub-agent(s). |
+| `/sdd-new <change-name> -- <prompt>` | Start a new change and auto-advance by orchestrator policy. |
+| `/sdd-continue [change-name]` | Run dependency-ready phases end-to-end (including apply + verify) until completion or blocked state. |
 | `/sdd-ff <change-name> [-- <prompt>]` | Fast-forward planning (proposal -> specs -> design -> tasks). |
-| `/sdd-apply <change-name> [-- <task-range-or-note>]` | Implement tasks in batches. Checks off items as it goes. |
-| `/sdd-verify <change-name>` | Validate implementation against specs. CRITICAL / WARNING / SUGGESTION. |
+| `/sdd-apply <change-name> [-- <task-range-or-note>]` | Implement tasks directly (targeted override or recovery path). |
+| `/sdd-verify <change-name>` | Run verification directly (optional explicit rerun). |
 
 ## Index
 
@@ -134,12 +139,12 @@ YOU: "I want to add CSV export to the app"
 
 ORCHESTRATOR (delegate-only, minimal context):
   -> launches EXPLORER sub-agent     -> returns: codebase analysis
-  -> shows you summary, you approve
+  -> synthesizes summary and auto-advances
   -> launches PROPOSER sub-agent     -> returns: proposal artifact
   -> launches SPEC WRITER sub-agent  -> returns: spec artifact      (parallel)
   -> launches DESIGNER sub-agent     -> returns: design artifact     (parallel)
   -> launches TASK PLANNER sub-agent -> returns: tasks artifact
-  -> shows you everything, you approve
+  -> synthesizes planning summary and auto-advances
   -> launches IMPLEMENTER sub-agent  -> returns: code written, tasks checked off
   -> launches VERIFIER sub-agent     -> returns: verification report
 ```
@@ -192,7 +197,7 @@ Why `.sdd/`:
 │  - Detect when SDD is needed                             │
 │  - Launch sub-agents via Task tool                       │
 │  - Show summaries to user                                │
-│  - Ask for approval between phases                       │
+│  - Auto-advance phase gates by policy                    │
 │  - Track state: which artifacts exist, what's next       │
 │                                                          │
 │  Context usage: MINIMAL (only state + summaries)         │

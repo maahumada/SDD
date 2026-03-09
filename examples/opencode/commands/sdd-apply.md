@@ -1,5 +1,5 @@
 ---
-description: Implement task batch. Usage: /sdd-apply <change-name> [-- <task-range-or-note>]
+description: Implement tasks directly (optional override). Usage: /sdd-apply <change-name> [-- <task-range-or-note>]
 agent: SDD
 ---
 
@@ -23,3 +23,7 @@ Examples:
 ```
 
 Use `docs/sdd-command-contract.md` for validation.
+
+Behavior note:
+- In normal workflows, `/sdd-continue` auto-runs apply and verify.
+- Use `/sdd-apply` when you need targeted implementation control.

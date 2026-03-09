@@ -1,5 +1,5 @@
 ---
-description: Start change (explore+proposal). Usage: /sdd-new <change-name> -- <prompt>
+description: Start change and auto-continue workflow. Usage: /sdd-new <change-name> -- <prompt>
 agent: SDD
 ---
 
@@ -22,3 +22,6 @@ Examples:
 ```
 
 Validate grammar with `docs/sdd-command-contract.md` before execution.
+
+Behavior note:
+- `/sdd-new` initializes the change and then auto-continues by orchestrator policy.

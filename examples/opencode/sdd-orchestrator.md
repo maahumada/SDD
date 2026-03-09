@@ -56,6 +56,11 @@ Commands must follow `docs/sdd-command-contract.md`:
 /sdd-verify <change-name>
 ```
 
+Default runtime behavior:
+- Use `/sdd-continue` as the end-to-end command. It auto-runs apply and verify
+  unless blocked/failed.
+- Use `/sdd-apply` and `/sdd-verify` only for targeted overrides/recovery.
+
 ## Behavior Reference
 
 - Router policy: `docs/adapters/sdd-router-core.md`

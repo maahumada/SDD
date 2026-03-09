@@ -1,4 +1,4 @@
-<!-- SDD:BEGIN adapter=OPENCODE_ORCHESTRATOR version=1 -->
+<!-- SDD:BEGIN adapter=OPENCODE_ORCHESTRATOR version=2 -->
 # OpenCode SDD Adapter
 
 Use this snippet to configure SDD orchestration in OpenCode.
@@ -50,6 +50,11 @@ Commands must follow `docs/sdd-command-contract.md`:
 /sdd-apply <change-name> [-- <task-range-or-note>]
 /sdd-verify <change-name>
 ```
+
+Default runtime behavior:
+- Use `/sdd-continue` as the end-to-end command. It auto-runs apply and verify
+  unless blocked/failed.
+- Use `/sdd-apply` and `/sdd-verify` only for targeted overrides/recovery.
 
 ## Behavior Reference
 

@@ -72,7 +72,8 @@ Use this checklist for every adapter-related change:
 - [ ] Required `--` separator usage is preserved.
 - [ ] No adapter introduces command names outside canonical set.
 - [ ] Adapter text references orchestrator flow, not duplicated local logic.
-- [ ] Approval gates (proposal/planning/apply/verify) are still represented.
+- [ ] Automatic gate transitions (proposal/planning/apply/verify) are represented consistently.
+- [ ] `/sdd-continue` end-to-end auto-run behavior is represented consistently.
 - [ ] README examples match command contract.
 - [ ] No references to deprecated naming or storage modes.
 
@@ -81,7 +82,8 @@ Use this checklist for every adapter-related change:
 Adapter drift is present when one or more occur:
 - Different syntax examples across adapter files.
 - Adapter-specific command semantics not present in command contract.
-- Missing or inconsistent approval gate behavior.
+- Missing or inconsistent automatic gate transition behavior.
+- Missing or inconsistent `/sdd-continue` end-to-end auto-run behavior.
 
 When drift is detected:
 1. Treat source-of-truth files as canonical.

@@ -1,6 +1,6 @@
 # SDD Router Core
 
-Version: 1  
+Version: 2  
 Status: Active
 
 This document defines the adapter routing policy for SDD entrypoints.
@@ -32,6 +32,8 @@ Routing rules:
 - On validation failure, return usage hint with canonical syntax.
 - On success, execute orchestrator flow from
   `skills/sdd-orchestrator/SKILL.md`.
+- Treat `/sdd-continue` as end-to-end auto-advance (including apply and verify)
+  unless blocked or failed.
 
 Command mode always has priority over heuristic mode.
 
@@ -63,7 +65,7 @@ When input is complex but non-command:
 1. Recommend canonical SDD entry command.
 2. If adapter policy allows auto-entry, map request to `/sdd-new` with a
    generated `change-name` and keep original request as prompt payload.
-3. Follow orchestrator checkpoints and do not skip proposal/planning gates.
+3. Follow orchestrator checkpoints and automatic gate transitions.
 
 Suggested message format:
 
@@ -82,7 +84,9 @@ Adapters must route phase execution through the orchestrator flow defined in:
 Key rules adapters must preserve:
 - Orchestrator delegates phase work to sub-agents.
 - Orchestrator does not perform phase content directly.
-- DAG dependencies and gates are enforced.
+- DAG dependencies and automatic gate transitions are enforced.
+- Normal completion path does not require separate `/sdd-apply` and
+  `/sdd-verify` commands.
 
 ## Compatibility with Command Grammar
 
@@ -98,5 +102,6 @@ Every adapter file must satisfy all items:
 - Uses command-first routing.
 - Uses canonical `/sdd-*` syntax in examples.
 - References orchestrator skill instead of re-implementing workflow logic.
-- Preserves proposal and planning approval gates.
+- Preserves automatic proposal/planning/apply/verify gate progression.
+- Preserves `/sdd-continue` full auto-run behavior to completion/blocked.
 - Does not define contradictory parsing rules.

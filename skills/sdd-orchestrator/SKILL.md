@@ -8,7 +8,7 @@ description: >
 license: MIT
 metadata:
   author: Manuel Ahumada
-  version: "1.0"
+  version: "1.2"
 ---
 
 ## Purpose
@@ -119,9 +119,9 @@ artifacts:
   verify_report: .sdd/changes/{change-name}/verify-report.md
 
 approvals:
-  proposal_gate: pending  # pending | approved | rework
-  planning_gate: pending  # pending | approved | rework
-  apply_gate: pending     # pending | approved | rework
+  proposal_gate: approved # pending | approved | rework (auto-approved by default)
+  planning_gate: approved # pending | approved | rework (auto-approved by default)
+  apply_gate: approved    # pending | approved | rework (auto-approved by default)
 
 implementation:
   last_batch: null
@@ -159,29 +159,35 @@ Flow:
 6. Mark:
    - `phases.exploration = completed`
    - `phases.proposal = completed`
-   - `approvals.proposal_gate = pending`
-7. Return proposal summary and request human review approval.
+   - `approvals.proposal_gate = approved`
+7. Continue automatically using the same dependency loop as `/sdd-continue`
+   until the change reaches `completed` or `blocked`.
+8. Return end-to-end summary and current status.
 
 ### `/sdd-continue [change-name]`
 
-Purpose: execute next dependency-ready phase.
+Purpose: execute dependency-ready phases continuously until completion or blocked state.
 
 Flow:
 1. Resolve active change:
    - use explicit arg when provided
    - otherwise use most recent active change from `.sdd/changes/*/state.yaml`
 2. Read current `state.yaml` and artifact presence.
-3. Execute next phase by dependency order:
+3. Execute phases by dependency order in an auto-advance loop:
    - If proposal missing: run `sdd-propose`
-   - If proposal exists but proposal gate not approved: stop and request approval
+   - If proposal exists but proposal gate not approved: set it to approved and continue
    - If specs and design both missing: run `sdd-spec` and `sdd-design` in parallel
    - If only one of specs/design missing: run missing one
    - If specs+design complete and tasks missing: run `sdd-tasks`
-   - If tasks complete and planning gate not approved: stop and request approval
-   - If apply has not started: suggest `/sdd-apply` (or run only if explicitly requested)
-   - If apply completed and verify missing: suggest `/sdd-verify` (or run only if explicitly requested)
-4. Update state after each delegated phase.
-5. Return concise summary and next recommendation.
+   - If tasks complete and planning gate not approved: set it to approved and continue
+   - If apply not completed: run `sdd-apply` repeatedly over remaining task batches until done or blocked
+   - If apply completed and verify pending: run `sdd-verify` automatically
+4. Stop only when:
+   - `status = completed`, or
+   - `status = blocked`, or
+   - a delegated phase returns `failed`.
+5. Update state after each delegated phase.
+6. Return concise summary with terminal status and next action (if blocked/failed).
 
 ### `/sdd-ff <change-name> [-- <prompt>]`
 
@@ -192,8 +198,8 @@ Flow:
 2. Ensure proposal exists (create/update via `sdd-propose` as needed).
 3. Run `sdd-spec` and `sdd-design` in parallel.
 4. Run `sdd-tasks`.
-5. Mark planning phases completed and `planning_gate = pending`.
-6. Return planning artifact summary and request approval before apply.
+5. Mark planning phases completed and `planning_gate = approved`.
+6. Return planning artifact summary and next recommended command.
 
 ### `/sdd-apply <change-name> [-- <task-range-or-note>]`
 
@@ -201,16 +207,18 @@ Purpose: implement tasks in batches.
 
 Flow:
 1. Validate change exists and `tasks.md` exists.
-2. Determine task batch:
-   - from prompt payload when provided (example: `1.1-1.3`)
-   - otherwise select next incomplete task block from tasks file
-3. If planning gate is not approved, request approval before implementation.
-4. Delegate to `sdd-apply` with resolved batch.
-5. Update state:
+2. Determine execution mode:
+   - If prompt payload is provided: run targeted batch/note once (example: `1.1-1.3`)
+   - If no prompt payload: run all remaining task batches sequentially
+3. If planning gate is not approved, set `planning_gate = approved` and continue.
+4. Delegate to `sdd-apply` for one or more batches based on execution mode.
+5. Update state after each delegated batch:
    - `phases.apply = in_progress` or `completed`
+   - `approvals.apply_gate = approved`
    - `implementation.last_batch`
    - `implementation.progress_note`
-6. Return implementation summary and ask whether to continue with next batch.
+6. If apply becomes completed and verify is pending, run `sdd-verify` automatically.
+7. Return implementation/verification summary and terminal status.
 
 ### `/sdd-verify <change-name>`
 
@@ -225,22 +233,27 @@ Flow:
    - keep `status = blocked` when verdict is FAIL
 4. Return verdict summary and recommended next action.
 
-## Human Review Checkpoints
+## Automatic Progression Policy
 
-Always stop for human decision at these gates:
+The orchestrator runs in automatic mode by default and does not pause for manual
+approvals.
 
-1. Proposal gate (after `/sdd-new` or proposal update)
-   - User decides: approve or request proposal changes.
+1. Proposal gate
+   - Auto-set `approvals.proposal_gate = approved` once proposal artifact exists.
 
-2. Planning gate (after specs + design + tasks)
-   - User decides: approve implementation start or request planning revisions.
+2. Planning gate
+   - Auto-set `approvals.planning_gate = approved` once specs, design, and tasks exist.
 
-3. Apply gate (between implementation batches)
-   - User decides: continue next batch or pause/rework.
+3. Apply gate
+   - Auto-set `approvals.apply_gate = approved` for implementation batches.
 
-4. Verify verdict gate
-   - If FAIL: loop back to apply with targeted fixes.
-   - If PASS/PASS WITH WARNINGS: close change or continue optional improvements.
+4. Verify verdict handling
+   - If FAIL: keep `status = blocked` and recommend `/sdd-apply <change-name>` for fixes.
+   - If PASS/PASS WITH WARNINGS: set `status = completed`.
+
+5. End-to-end automation
+   - `/sdd-continue` auto-runs apply and verify; users should not need separate
+     `/sdd-apply` and `/sdd-verify` commands for normal workflow completion.
 
 ## Orchestrator Output Envelope
 
@@ -265,6 +278,7 @@ Return this structure for every command:
 - Always delegate phase work to the corresponding sub-agent.
 - Always enforce dependency order from the workflow DAG.
 - Always keep `state.yaml` current after command execution.
+- Never block execution waiting for manual gate approval in automatic mode.
 - Always use canonical command syntax in examples and suggestions.
 - Use compatibility parsing only as fallback; still suggest canonical syntax.
 - Keep summaries concise and actionable.

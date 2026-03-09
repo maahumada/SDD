@@ -1,5 +1,5 @@
 ---
-description: Verify quality gate. Usage: /sdd-verify <change-name>
+description: Verify directly (optional rerun). Usage: /sdd-verify <change-name>
 agent: SDD
 ---
 
@@ -22,3 +22,7 @@ Example:
 ```
 
 Validation rules come from `docs/sdd-command-contract.md`.
+
+Behavior note:
+- In normal workflows, `/sdd-continue` auto-runs verify after apply completes.
+- Use `/sdd-verify` for explicit re-verification.

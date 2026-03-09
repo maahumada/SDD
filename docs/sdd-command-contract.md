@@ -1,6 +1,6 @@
 # SDD Command Contract
 
-Version: 1  
+Version: 2  
 Status: Active
 
 This document defines the canonical command grammar for SDD orchestration.
@@ -23,11 +23,11 @@ Rules:
 | Command | Required Args | Optional Args | Prompt Segment | Purpose |
 |---------|---------------|---------------|----------------|---------|
 | `/sdd-explore` | none | none | required: `-- <topic>` | Explore a topic and return analysis. |
-| `/sdd-new` | `<change-name>` | none | required: `-- <prompt>` | Start a new change with exploration and proposal. |
-| `/sdd-continue` | none | `[change-name]` | not used | Run next dependency-ready phase for active change. |
+| `/sdd-new` | `<change-name>` | none | required: `-- <prompt>` | Start a new change with exploration/proposal, then auto-continue by orchestrator policy. |
+| `/sdd-continue` | none | `[change-name]` | not used | Run dependency-ready phases for active change until completion or blocked state. |
 | `/sdd-ff` | `<change-name>` | none | optional: `-- <prompt>` | Fast-forward planning artifacts for a change. |
-| `/sdd-apply` | `<change-name>` | none | optional: `-- <task-range-or-note>` | Implement task batch for a change. |
-| `/sdd-verify` | `<change-name>` | none | not used | Verify implementation against specs and tasks. |
+| `/sdd-apply` | `<change-name>` | none | optional: `-- <task-range-or-note>` | Implement tasks for a change (targeted range or automatic remaining batches). |
+| `/sdd-verify` | `<change-name>` | none | not used | Verify implementation against specs and tasks (normally auto-run by `/sdd-continue`). |
 
 ## Argument Grammar
 
@@ -82,6 +82,14 @@ Normalized shape:
   "prompt": "add toggle, persist preference, include tests"
 }
 ```
+
+## Automation Behavior
+
+- `/sdd-continue` is the default end-to-end execution command.
+- It should auto-advance from the current phase through apply and verify without
+  requiring separate `/sdd-apply` and `/sdd-verify` commands.
+- `/sdd-apply` and `/sdd-verify` remain available for targeted recovery,
+  partial reruns, or explicit operator control.
 
 ## Validation and Error Behavior
 
@@ -186,9 +194,12 @@ Adapters should preserve this compatibility behavior consistently.
 /sdd-continue add-dark-mode
 
 /sdd-ff add-dark-mode -- regenerate planning artifacts after updated proposal
+```
 
+Targeted override commands (optional):
+
+```text
 /sdd-apply add-dark-mode -- 1.1-1.3
-
 /sdd-verify add-dark-mode
 ```
 

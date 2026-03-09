@@ -7,6 +7,7 @@ This repository uses SDD (Spec Driven Development) for complex work.
 - Parse `/sdd-*` commands using `docs/sdd-command-contract.md`.
 - Route execution through `skills/sdd-orchestrator/SKILL.md`.
 - Keep this adapter thin and delegate phase work to SDD sub-agents.
+- Treat `/sdd-continue` as the default end-to-end command (auto-runs apply and verify).
 
 ## Canonical Commands
 
@@ -27,7 +28,7 @@ Use canonical syntax in examples and correction hints.
 - If input is complex and non-command, suggest:
   `/sdd-new <change-name> -- <request>`
 - If auto-routing is enabled, map complex request to `/sdd-new`.
-- Keep proposal and planning approval gates before implementation.
+- Keep orchestrator gate progression automatic (no manual approval pauses).
 
 ## Delegation Pattern
 

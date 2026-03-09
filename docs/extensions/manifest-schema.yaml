@@ -1,0 +1,150 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+title: SDD Extension Manifest Schema
+description: >-
+  Machine-parseable contract for SDD extension pack manifests, including
+  required identity metadata, declared provided artifacts, compatibility,
+  dependency declarations, and conflict declarations.
+type: object
+additionalProperties: false
+required:
+  - schema_version
+  - id
+  - name
+  - version
+  - provides
+  - compatibility
+properties:
+  schema_version:
+    type: integer
+    minimum: 1
+    description: Manifest schema major version.
+
+  id:
+    type: string
+    pattern: ^[a-z0-9][a-z0-9-]{1,62}$
+    description: >-
+      Stable extension identifier. This enforces the scenario "Invalid
+      extension identifier is rejected by contract".
+
+  name:
+    type: string
+    minLength: 1
+    description: Human-readable extension name.
+
+  version:
+    type: string
+    pattern: ^[0-9]+\.[0-9]+\.[0-9]+(?:[-+][0-9A-Za-z.-]+)?$
+    description: Semantic version of the extension pack.
+
+  description:
+    type: string
+    minLength: 1
+    description: Optional human-readable description.
+
+  provides:
+    type: object
+    additionalProperties: false
+    required:
+      - skills
+      - rules
+      - checklists
+      - templates
+    properties:
+      skills:
+        type: array
+        items:
+          type: string
+          minLength: 1
+        uniqueItems: true
+      rules:
+        type: array
+        items:
+          type: string
+          minLength: 1
+        uniqueItems: true
+      checklists:
+        type: array
+        items:
+          type: string
+          minLength: 1
+        uniqueItems: true
+      templates:
+        type: array
+        items:
+          type: string
+          minLength: 1
+        uniqueItems: true
+
+  compatibility:
+    type: object
+    additionalProperties: false
+    required:
+      - sdd
+    properties:
+      sdd:
+        type: string
+        minLength: 1
+        description: Supported SDD core version range.
+
+  dependencies:
+    type: array
+    description: Extensions that must also be enabled.
+    items:
+      type: string
+      pattern: ^[a-z0-9][a-z0-9-]{1,62}$
+    uniqueItems: true
+
+  conflicts:
+    type: array
+    description: Extensions that cannot be enabled concurrently.
+    items:
+      type: string
+      pattern: ^[a-z0-9][a-z0-9-]{1,62}$
+    uniqueItems: true
+
+examples:
+  - schema_version: 1
+    id: web-api-baseline
+    name: Web API Baseline
+    version: 0.1.0
+    provides:
+      skills: []
+      rules: []
+      checklists: []
+      templates: []
+    compatibility:
+      sdd: '>=1.0.0 <2.0.0'
+    dependencies: []
+    conflicts: []
+
+x-invalid-examples:
+  - case: invalid_identifier
+    input:
+      schema_version: 1
+      id: Web_API_Baseline
+      name: Invalid Identifier
+      version: 0.1.0
+      provides:
+        skills: []
+        rules: []
+        checklists: []
+        templates: []
+      compatibility:
+        sdd: '>=1.0.0 <2.0.0'
+    expected_error: "id must match ^[a-z0-9][a-z0-9-]{1,62}$"
+
+x-validation-walkthrough:
+  - case: minimal_valid_manifest
+    source: examples[0]
+    expected: pass
+    notes: Required fields and identifier pattern satisfy schema constraints.
+  - case: invalid_identifier
+    source: x-invalid-examples[0]
+    expected: fail
+    notes: id violates pattern ^[a-z0-9][a-z0-9-]{1,62}$.
+
+x-versioning:
+  major: 1
+  forward_compatibility: >-
+    Additive manifest fields must remain optional in major version 1; breaking
+    schema changes require a major schema_version increment.

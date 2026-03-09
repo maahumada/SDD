@@ -1,4 +1,4 @@
-<!-- SDD:BEGIN adapter=ORCHESTRATOR_SNIPPET version=1 -->
+<!-- SDD:BEGIN adapter=ORCHESTRATOR_SNIPPET version=2 -->
 # SDD Orchestrator Adapter Snippet
 
 Use this snippet for tools that support dedicated orchestrator instructions.
@@ -19,6 +19,11 @@ Use this snippet for tools that support dedicated orchestrator instructions.
 /sdd-apply <change-name> [-- <task-range-or-note>]
 /sdd-verify <change-name>
 ```
+
+Default orchestration behavior:
+
+- Use `/sdd-continue` as the end-to-end command; it auto-runs apply and verify.
+- Use `/sdd-apply` and `/sdd-verify` only for targeted overrides/recovery.
 
 ## References
 
