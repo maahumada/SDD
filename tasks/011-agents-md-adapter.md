@@ -1,7 +1,7 @@
 # Task 011: Add AGENTS.md Adapter
 
 **Priority**: High  
-**Status**: Pending  
+**Status**: Completed  
 **Depends on**: 010-adapter-core-router-and-sync-policy.md
 
 ---
@@ -26,9 +26,9 @@ Create `AGENTS.md` at repository root.
 
 ## Acceptance Criteria
 
-- [ ] File created at `AGENTS.md`
-- [ ] `/sdd-*` command references match Task 008 grammar
-- [ ] Delegation to orchestrator is explicit
-- [ ] Guardrails against skipping phases are explicit
-- [ ] Content remains adapter-thin (no duplicated full orchestrator logic)
-- [ ] No references to `engram`, `hybrid`, or `openspec` naming
+- [x] File created at `AGENTS.md`
+- [x] `/sdd-*` command references match Task 008 grammar
+- [x] Delegation to orchestrator is explicit
+- [x] Guardrails against skipping phases are explicit
+- [x] Content remains adapter-thin (no duplicated full orchestrator logic)
+- [x] No references to `engram`, `hybrid`, or `openspec` naming
