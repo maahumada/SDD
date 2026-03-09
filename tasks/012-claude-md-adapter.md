@@ -1,7 +1,7 @@
 # Task 012: Add CLAUDE.md Adapter
 
 **Priority**: High  
-**Status**: Pending  
+**Status**: Completed  
 **Depends on**: 010-adapter-core-router-and-sync-policy.md
 
 ---
@@ -26,9 +26,9 @@ Create `CLAUDE.md` at repository root.
 
 ## Acceptance Criteria
 
-- [ ] File created at `CLAUDE.md`
-- [ ] Command examples use canonical `--` separator where needed
-- [ ] Behavior is aligned with `docs/adapters/sdd-router-core.md`
-- [ ] Orchestrator reference path is explicit
-- [ ] Adapter remains concise and non-duplicative
-- [ ] No references to `engram`, `hybrid`, or `openspec` naming
+- [x] File created at `CLAUDE.md`
+- [x] Command examples use canonical `--` separator where needed
+- [x] Behavior is aligned with `docs/adapters/sdd-router-core.md`
+- [x] Orchestrator reference path is explicit
+- [x] Adapter remains concise and non-duplicative
+- [x] No references to `engram`, `hybrid`, or `openspec` naming
