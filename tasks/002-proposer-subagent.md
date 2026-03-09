@@ -1,7 +1,7 @@
 # Task 002: Define the Proposer Sub-Agent
 
 **Priority**: High  
-**Status**: Pending  
+**Status**: Completed  
 **Depends on**: ADR-001
 
 ---
@@ -63,11 +63,11 @@ Simplify to: Read from `.sdd/` filesystem paths directly, no mode branching.
 
 ## Acceptance Criteria
 
-- [ ] File created at `skills/sdd-propose/SKILL.md`
-- [ ] No references to engram, hybrid, mode resolution, or "openspec" naming
-- [ ] Persistence is always `.sdd/` directory (filesystem)
-- [ ] The proposal.md template is complete (Intent, Scope, Approach, Affected Areas, Risks, Rollback Plan, Dependencies, Success Criteria)
-- [ ] The return summary format is preserved
-- [ ] Rules about rollback plan and success criteria being mandatory are preserved
-- [ ] YAML frontmatter with updated metadata
-- [ ] The structured envelope contract is preserved
+- [x] File created at `skills/sdd-propose/SKILL.md`
+- [x] No references to engram, hybrid, mode resolution, or "openspec" naming
+- [x] Persistence is always `.sdd/` directory (filesystem)
+- [x] The proposal.md template is complete (Intent, Scope, Approach, Affected Areas, Risks, Rollback Plan, Dependencies, Success Criteria)
+- [x] The return summary format is preserved
+- [x] Rules about rollback plan and success criteria being mandatory are preserved
+- [x] YAML frontmatter with updated metadata
+- [x] The structured envelope contract is preserved
