@@ -1,7 +1,7 @@
 # Task 013: Add GEMINI.md Adapter
 
 **Priority**: Medium  
-**Status**: Pending  
+**Status**: Completed  
 **Depends on**: 010-adapter-core-router-and-sync-policy.md
 
 ---
@@ -26,9 +26,9 @@ Create `GEMINI.md` at repository root.
 
 ## Acceptance Criteria
 
-- [ ] File created at `GEMINI.md`
-- [ ] Command syntax matches Task 008 contract
-- [ ] Tool limitation notes are explicit (if applicable)
-- [ ] Fallback orchestration policy preserves SDD phase order
-- [ ] Adapter points to core docs instead of duplicating full logic
-- [ ] No references to `engram`, `hybrid`, or `openspec` naming
+- [x] File created at `GEMINI.md`
+- [x] Command syntax matches Task 008 contract
+- [x] Tool limitation notes are explicit (if applicable)
+- [x] Fallback orchestration policy preserves SDD phase order
+- [x] Adapter points to core docs instead of duplicating full logic
+- [x] No references to `engram`, `hybrid`, or `openspec` naming
