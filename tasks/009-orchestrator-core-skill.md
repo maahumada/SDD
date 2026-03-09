@@ -1,7 +1,7 @@
 # Task 009: Define Orchestrator Core Skill
 
 **Priority**: High  
-**Status**: Pending  
+**Status**: Completed  
 **Depends on**: 008-command-contract-and-grammar.md
 
 ---
@@ -41,10 +41,10 @@ The orchestrator skill must define:
 
 ## Acceptance Criteria
 
-- [ ] File created at `skills/sdd-orchestrator/SKILL.md`
-- [ ] Command routing reflects Task 008 contract
-- [ ] Workflow DAG and phase dependencies are explicit
-- [ ] `.sdd/changes/{change-name}/state.yaml` contract is defined
-- [ ] Human review checkpoints are documented
-- [ ] Rule "orchestrator delegates, never performs phase work" is explicit
-- [ ] No references to `engram`, `hybrid`, or `openspec` naming
+- [x] File created at `skills/sdd-orchestrator/SKILL.md`
+- [x] Command routing reflects Task 008 contract
+- [x] Workflow DAG and phase dependencies are explicit
+- [x] `.sdd/changes/{change-name}/state.yaml` contract is defined
+- [x] Human review checkpoints are documented
+- [x] Rule "orchestrator delegates, never performs phase work" is explicit
+- [x] No references to `engram`, `hybrid`, or `openspec` naming
