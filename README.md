@@ -259,6 +259,30 @@ Adapter mode keeps command grammar and orchestrator behavior aligned with:
 | OpenCode adapter | `examples/opencode/sdd-orchestrator.md` | OpenCode setup and merge instructions |
 | OpenCode commands | `examples/opencode/commands/sdd-*.md` | Slash command command-pack |
 
+### Install Adapters in Another Project
+
+Use the install script to apply adapters into any target repository:
+
+```bash
+./scripts/sdd-install.sh --project ../my-project --adapters agents,claude,gemini,opencode
+```
+
+Update already-installed adapters:
+
+```bash
+./scripts/sdd-update.sh --project ../my-project --adapters agents,opencode
+```
+
+Preview without writing changes:
+
+```bash
+./scripts/sdd-install.sh --project ../my-project --adapters agents --dry-run
+```
+
+Full installation and update guide:
+- `docs/adapter-installation.md`
+- `templates/README.md`
+
 ---
 
 ## Concepts

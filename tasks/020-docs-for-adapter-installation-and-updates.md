@@ -1,7 +1,7 @@
 # Task 020: Document Adapter Installation and Update Flow
 
 **Priority**: High  
-**Status**: Pending  
+**Status**: Completed  
 **Depends on**: 017-installer-script-for-adapters.md, 018-update-script-and-version-stamp.md, 019-smoke-tests-for-install-update-scripts.md
 
 ---
@@ -26,8 +26,8 @@ Documentation must include:
 
 ## Acceptance Criteria
 
-- [ ] `docs/adapter-installation.md` exists
-- [ ] README links to installation/update docs
-- [ ] Examples include `--project` and `--adapters` usage
-- [ ] Managed block + backup behavior is clearly explained
-- [ ] Troubleshooting section covers common failure modes
+- [x] `docs/adapter-installation.md` exists
+- [x] README links to installation/update docs
+- [x] Examples include `--project` and `--adapters` usage
+- [x] Managed block + backup behavior is clearly explained
+- [x] Troubleshooting section covers common failure modes
