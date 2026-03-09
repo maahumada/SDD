@@ -1,6 +1,6 @@
 ---
-description: Explore a topic with SDD routing
-agent: sdd-orchestrator
+description: Explore a topic. Usage: /sdd-explore -- <topic>
+agent: SDD
 ---
 
 Route this input through the SDD orchestrator as:

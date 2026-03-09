@@ -1,6 +1,6 @@
 ---
-description: Continue the next dependency-ready SDD phase
-agent: sdd-orchestrator
+description: Continue next phase. Usage: /sdd-continue [change-name]
+agent: SDD
 ---
 
 Route this input through the SDD orchestrator as:

@@ -1,7 +1,7 @@
 <!-- SDD:BEGIN adapter=OPENCODE_CMD_SDD_FF version=1 -->
 ---
-description: Fast-forward SDD planning artifacts
-agent: sdd-orchestrator
+description: Fast-forward planning. Usage: /sdd-ff <change-name> [-- <prompt>]
+agent: SDD
 ---
 
 Route this input through the SDD orchestrator as:

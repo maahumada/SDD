@@ -57,6 +57,17 @@ assert_same_checksum() {
   fi
 }
 
+assert_not_same_checksum() {
+  before_sum="$1"
+  after_sum="$2"
+  test_name="$3"
+  if [ "$before_sum" != "$after_sum" ]; then
+    log_pass "$test_name"
+  else
+    log_fail "$test_name"
+  fi
+}
+
 printf "Running SDD install/update smoke tests in %s\n" "$TMP_DIR"
 
 # Scenario 1: Fresh install into empty fixture project.
@@ -82,12 +93,13 @@ assert_contains "$TMP_DIR/existing-managed/AGENTS.md" "<!-- SDD:BEGIN adapter=AG
 assert_contains "$TMP_DIR/existing-managed/AGENTS.md" "This section is custom content and must be preserved." "update preserves custom content before block"
 assert_contains "$TMP_DIR/existing-managed/AGENTS.md" "Footer notes must stay untouched." "update preserves custom content after block"
 
-# Scenario 4: Existing custom file without markers should not be overwritten.
+# Scenario 4: Existing custom file without markers is overwritten by default.
 cp -R "$FIXTURES_DIR/custom-no-markers" "$TMP_DIR/custom-no-markers"
 before_custom=$(sha256sum "$TMP_DIR/custom-no-markers/AGENTS.md" | awk '{print $1}')
 "$INSTALL_SCRIPT" --project "$TMP_DIR/custom-no-markers" --adapters agents --yes --no-backup >/dev/null
 after_custom=$(sha256sum "$TMP_DIR/custom-no-markers/AGENTS.md" | awk '{print $1}')
-assert_same_checksum "$before_custom" "$after_custom" "install preserves custom unmarked file without --force"
+assert_not_same_checksum "$before_custom" "$after_custom" "install overwrites custom unmarked file by default"
+assert_contains "$TMP_DIR/custom-no-markers/AGENTS.md" "<!-- SDD:BEGIN adapter=AGENTS version=1 -->" "install writes managed block into overwritten file"
 
 # Scenario 5: Dry-run mode is non-destructive.
 before_dry=$(sha256sum "$TMP_DIR/custom-no-markers/AGENTS.md" | awk '{print $1}')

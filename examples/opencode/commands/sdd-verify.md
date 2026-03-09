@@ -1,6 +1,6 @@
 ---
-description: Verify SDD implementation quality and compliance
-agent: sdd-orchestrator
+description: Verify quality gate. Usage: /sdd-verify <change-name>
+agent: SDD
 ---
 
 Route this input through the SDD orchestrator as:

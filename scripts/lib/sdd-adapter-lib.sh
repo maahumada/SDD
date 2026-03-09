@@ -148,23 +148,10 @@ sdd_apply_template_install() {
     return 0
   fi
 
-  local_force="$force"
-  if [ "$local_force" -eq 0 ] && [ "$yes_flag" -eq 0 ]; then
-    printf "WARN: %s exists without SDD managed block for %s. Overwrite? [y/N]: " "$target_path" "$adapter_id"
-    read answer
-    case "$answer" in
-      y|Y|yes|YES)
-        local_force=1
-        ;;
-      *)
-        ;;
-    esac
-  fi
-
-  if [ "$local_force" -eq 0 ]; then
-    sdd_log "CONFLICT" "$target_path (missing managed block for adapter ${adapter_id}; use --force to overwrite)"
-    return 0
-  fi
+  # Installer is non-interactive by default: overwrite files without managed
+  # blocks, preserving a backup unless disabled. Keep force/yes args for
+  # backward compatibility with older invocations.
+  : "$force" "$yes_flag"
 
   if [ "$dry_run" -eq 1 ]; then
     sdd_log "DRY-RUN" "overwrite $target_path"
@@ -177,7 +164,7 @@ sdd_apply_template_install() {
   fi
 
   cp "$template_path" "$target_path"
-  sdd_log "UPDATED" "$target_path (overwrite via --force)"
+  sdd_log "UPDATED" "$target_path (overwrite without managed block)"
   return 0
 }
 

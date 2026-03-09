@@ -22,6 +22,34 @@ Preview changes without writing files:
 ./scripts/sdd-install.sh --project ../my-project --adapters agents,opencode --dry-run
 ```
 
+## OpenCode Global Install
+
+To install SDD directly into your OpenCode user config (`~/.config/opencode`):
+
+```bash
+./scripts/sdd-install-opencode.sh
+```
+
+Dry-run to preview:
+
+```bash
+./scripts/sdd-install-opencode.sh --dry-run
+```
+
+Custom target path (useful for testing):
+
+```bash
+./scripts/sdd-install-opencode.sh --target-config /tmp/opencode
+```
+
+What it installs:
+- `skills/sdd-*` into `<target>/skills/`
+- OpenCode command pack into `<target>/commands/`
+- `agent.SDD` entry into `<target>/opencode.json` with `mode: primary`
+
+This makes `SDD` show in the primary agent picker (Tab) together
+with built-in agents such as `build` and `plan`.
+
 ## Install Script Reference
 
 Script: `scripts/sdd-install.sh`
@@ -32,8 +60,8 @@ Required:
 Options:
 - `--adapters <list>`: comma-separated values from `agents,claude,gemini,opencode`.
 - `--dry-run`: print actions only, no file modifications.
-- `--force`: overwrite files that do not contain SDD managed blocks.
-- `--yes`: non-interactive mode.
+- `--force`: compatibility flag (overwrite is already default).
+- `--yes`: compatibility flag (installer is non-interactive by default).
 - `--no-backup`: disable backup creation before modifying existing files.
 
 Examples:
@@ -41,7 +69,7 @@ Examples:
 ```bash
 ./scripts/sdd-install.sh --project ../my-project --adapters agents,claude
 ./scripts/sdd-install.sh --project ../my-project --adapters opencode --dry-run
-./scripts/sdd-install.sh --project ../my-project --adapters agents --force
+./scripts/sdd-install.sh --project ../my-project --adapters agents
 ```
 
 ## Update Script Reference
@@ -78,6 +106,8 @@ Behavior:
 - Installer creates files when missing.
 - If a file already contains matching managed markers, only the managed block is replaced.
 - User content outside managed markers is preserved.
+- If a file exists without managed markers, installer overwrites it by default
+  (with backup unless `--no-backup` is used).
 - Update script never overwrites files that do not contain managed markers.
 
 ## Backup Behavior
@@ -104,14 +134,15 @@ Disable backups explicitly with `--no-backup`.
 
 ## Troubleshooting
 
-### Conflict: file has no managed markers
+### Existing file was overwritten during install
 
 Symptom:
-- Installer reports conflict for an existing file.
+- Installer replaced a file that had no managed markers.
 
 Resolution:
-- Use `--force` to overwrite, or add managed block markers manually, or keep
-  the file unchanged.
+- This is expected default behavior for install.
+- Restore from backup file (`*.bak.<timestamp>`) or run with `--dry-run` first
+  to preview what will change.
 
 ### Missing target file during update
 

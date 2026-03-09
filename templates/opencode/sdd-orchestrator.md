@@ -11,8 +11,11 @@ Use this snippet to configure SDD orchestration in OpenCode.
 cp examples/opencode/commands/sdd-*.md ~/.config/opencode/commands/
 ```
 
-2. Add or merge the `sdd-orchestrator` agent from
+2. Add or merge the `SDD` agent from
 `examples/opencode/opencode.json` into your OpenCode config.
+
+   The provided config sets `mode: primary`, so `SDD` appears in the primary
+   agent picker (Tab) alongside agents like `build` and `plan`.
 
 3. Ensure your skills include:
 - `skills/sdd-orchestrator/SKILL.md`
@@ -29,9 +32,11 @@ cp examples/opencode/commands/sdd-*.md ~/.config/opencode/commands/
 If you already have `~/.config/opencode/opencode.json`:
 
 1. Keep your existing agents untouched.
-2. Add a new `agent.sdd-orchestrator` entry from `examples/opencode/opencode.json`.
+2. Add a new `agent.SDD` entry from `examples/opencode/opencode.json`.
 3. Keep command files in `~/.config/opencode/commands/`.
 4. If command names conflict, keep `/sdd-*` names canonical and remove aliases.
+5. If you already had `sdd-orchestrator`, running the installer migrates it to
+   the `SDD` primary agent automatically.
 
 ## Command Contract
 

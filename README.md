@@ -8,6 +8,114 @@ Zero dependencies. Pure Markdown. `.sdd/` filesystem persistence.
 
 ---
 
+## Installation
+
+### Install In A Project
+
+Install adapters into any repository:
+
+```bash
+./scripts/sdd-install.sh --project ../my-project --adapters agents,claude,gemini,opencode
+```
+
+### Install Globally In OpenCode
+
+Install SDD directly into your OpenCode config (`~/.config/opencode`):
+
+```bash
+./scripts/sdd-install-opencode.sh
+```
+
+This configures `SDD` as a primary agent (`mode: primary`), so you
+can pick it with Tab like `build` and `plan`.
+
+### Update Installed Adapters
+
+```bash
+./scripts/sdd-update.sh --project ../my-project --adapters agents,opencode
+```
+
+Preview changes without writing files:
+
+```bash
+./scripts/sdd-install.sh --project ../my-project --adapters agents --dry-run
+```
+
+Installer behavior note:
+- `sdd-install.sh` is non-interactive and overwrites existing target files by default.
+- Backups are created automatically unless you pass `--no-backup`.
+
+### Full Installation Docs
+
+- `docs/adapter-installation.md`
+- `templates/README.md`
+
+## Usage Modes By Platform
+
+### OpenCode
+
+- Select `SDD` in the primary agent picker (Tab).
+- `SDD` is an agent profile, not a slash command.
+- Slash command entries (`/sdd-*`) include one-line usage hints in the command description.
+- You can use:
+  - conversational mode (plain language prompts), or
+  - command mode (recommended for deterministic runs).
+
+Recommended command mode examples:
+
+```text
+/sdd-new add-dark-mode -- add theme toggle with persisted preference
+/sdd-continue add-dark-mode
+/sdd-apply add-dark-mode -- 1.1-1.3
+/sdd-verify add-dark-mode
+```
+
+### Claude Code
+
+- Use `CLAUDE.md` for routing behavior.
+- For complex changes, prefer canonical `/sdd-*` commands.
+
+### Codex (AGENTS.md-aware)
+
+- Use `AGENTS.md` as adapter entrypoint.
+- Run canonical `/sdd-*` commands for best reproducibility.
+
+### Gemini
+
+- Use `GEMINI.md` adapter.
+- If true sub-agent delegation is unavailable, follow inline fallback while
+  preserving SDD phase order and approval gates.
+
+### Canonical Command Format
+
+```text
+/sdd-<command> [args...] [-- <free-text-prompt>]
+```
+
+Command reference:
+
+| Command | What It Does |
+|---------|-------------|
+| `/sdd-explore -- <topic>` | Investigate an idea. Reads codebase, compares approaches. |
+| `/sdd-new <change-name> -- <prompt>` | Start a new change: exploration + proposal. |
+| `/sdd-continue [change-name]` | Run the next dependency-ready phase via sub-agent(s). |
+| `/sdd-ff <change-name> [-- <prompt>]` | Fast-forward planning (proposal -> specs -> design -> tasks). |
+| `/sdd-apply <change-name> [-- <task-range-or-note>]` | Implement tasks in batches. Checks off items as it goes. |
+| `/sdd-verify <change-name>` | Validate implementation against specs. CRITICAL / WARNING / SUGGESTION. |
+
+## Index
+
+- [Installation](#installation)
+- [Usage Modes By Platform](#usage-modes-by-platform)
+- [The Problem](#the-problem)
+- [The Solution](#the-solution)
+- [How It Works](#how-it-works)
+- [The 7 Sub-Agents](#the-7-sub-agents)
+- [Concepts](#concepts)
+- [Project Structure](#project-structure)
+- [Inspiration](#inspiration)
+- [Created by Manuel Ahumada](#created-by-manuel-ahumada)
+
 ## The Problem
 
 AI coding assistants are powerful, but they struggle with complex features:
@@ -172,116 +280,8 @@ Each sub-agent is a SKILL.md file -- pure Markdown instructions that any AI assi
 
 ---
 
-## Usage Modes
-
-SDD supports two entrypoints:
-
-1. **Command mode (deterministic)**: you run canonical `/sdd-*` commands.
-2. **Adapter mode (auto-router)**: model instruction files route complex
-   plain-language requests to SDD behavior.
-
-## Commands
-
-Canonical grammar:
-
-```text
-/sdd-<command> [args...] [-- <free-text-prompt>]
-```
-
-| Command | What It Does |
-|---------|-------------|
-| `/sdd-explore -- <topic>` | Investigate an idea. Reads codebase, compares approaches. |
-| `/sdd-new <change-name> -- <prompt>` | Start a new change: exploration + proposal. |
-| `/sdd-continue [change-name]` | Run the next dependency-ready phase via sub-agent(s). |
-| `/sdd-ff <change-name> [-- <prompt>]` | Fast-forward planning (proposal -> specs -> design -> tasks). |
-| `/sdd-apply <change-name> [-- <task-range-or-note>]` | Implement tasks in batches. Checks off items as it goes. |
-| `/sdd-verify <change-name>` | Validate implementation against specs. CRITICAL / WARNING / SUGGESTION. |
-
-### Command Mode Example Flow
-
-```text
-You: /sdd-new add-dark-mode -- add theme toggle with system fallback and local storage persistence
-
-AI:  Launching explorer sub-agent...
-     Done. React + Tailwind detected. Hardcoded light mode in globals.css.
-
-     Launching proposer sub-agent...
-     Done. proposal.md created.
-       Intent: Add dark mode toggle with system preference detection
-       Scope: Theme context, toggle component, CSS variables
-
-     Proposal ready. Approve to continue with specs and design?
-
-You: /sdd-continue add-dark-mode
-
-AI:  Launching spec-writer and designer in parallel...
-     Done.
-       .sdd/changes/add-dark-mode/specs/ui/spec.md - 3 requirements, 7 scenarios
-       .sdd/changes/add-dark-mode/design.md - CSS variables approach, React Context, localStorage
-
-     Launching task-planner...
-     Done. .sdd/changes/add-dark-mode/tasks.md - 3 phases, 8 tasks
-
-     Planning complete. Approve implementation?
-
-You: /sdd-apply add-dark-mode -- 1.1-1.3
-
-AI:  Implementing Phase 1 (Foundation)...
-     [x] 1.1 Created ThemeContext
-     [x] 1.2 Added CSS custom properties
-     [x] 1.3 Added localStorage persistence
-
-     3/8 tasks complete. Continue with next batch?
-```
-
-### Adapter Mode Example (No Command)
-
-```text
-You: "Necesito agregar dark mode con persistencia y quiero revisar el plan antes de implementar"
-
-AI:  This request is complex and is a good fit for SDD.
-     Recommended command:
-     /sdd-new add-dark-mode -- agregar dark mode con persistencia y revision por etapas
-```
-
-Adapter mode keeps command grammar and orchestrator behavior aligned with:
-- `docs/sdd-command-contract.md`
-- `docs/adapters/sdd-router-core.md`
-- `skills/sdd-orchestrator/SKILL.md`
-
-### Adapter Compatibility
-
-| Tooling Surface | File | Purpose |
-|-----------------|------|---------|
-| Generic adapter | `AGENTS.md` | Command-first router + SDD guardrails |
-| Claude adapter | `CLAUDE.md` | Claude-specific SDD routing guidance |
-| Gemini adapter | `GEMINI.md` | Gemini routing + inline fallback guidance |
-| OpenCode adapter | `examples/opencode/sdd-orchestrator.md` | OpenCode setup and merge instructions |
-| OpenCode commands | `examples/opencode/commands/sdd-*.md` | Slash command command-pack |
-
-### Install Adapters in Another Project
-
-Use the install script to apply adapters into any target repository:
-
-```bash
-./scripts/sdd-install.sh --project ../my-project --adapters agents,claude,gemini,opencode
-```
-
-Update already-installed adapters:
-
-```bash
-./scripts/sdd-update.sh --project ../my-project --adapters agents,opencode
-```
-
-Preview without writing changes:
-
-```bash
-./scripts/sdd-install.sh --project ../my-project --adapters agents --dry-run
-```
-
-Full installation and update guide:
-- `docs/adapter-installation.md`
-- `templates/README.md`
+For setup and daily usage, see [Installation](#installation) and
+[Usage Modes By Platform](#usage-modes-by-platform).
 
 ---
 

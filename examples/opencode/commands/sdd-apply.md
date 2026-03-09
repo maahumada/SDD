@@ -1,6 +1,6 @@
 ---
-description: Implement SDD tasks in batches
-agent: sdd-orchestrator
+description: Implement task batch. Usage: /sdd-apply <change-name> [-- <task-range-or-note>]
+agent: SDD
 ---
 
 Route this input through the SDD orchestrator as:

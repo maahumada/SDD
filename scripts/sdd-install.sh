@@ -20,8 +20,8 @@ Required:
 Options:
   --adapters <list>         Comma-separated adapters (default: agents,claude,gemini,opencode)
   --dry-run                 Show actions without modifying files
-  --force                   Overwrite files that do not contain SDD managed blocks
-  --yes                     Non-interactive mode (do not prompt)
+  --force                   Deprecated compatibility flag (overwrite is default)
+  --yes                     Deprecated compatibility flag (installer is non-interactive)
   --no-backup               Do not create backups before modifying files
   --help                    Show this help
 
@@ -91,6 +91,14 @@ sdd_log "INFO" "Adapters: $(printf "%s" "$ADAPTERS" | tr ' ' ',')"
 
 if [ "$DRY_RUN" -eq 1 ]; then
   sdd_log "INFO" "Dry-run mode enabled"
+fi
+
+if [ "$FORCE" -eq 1 ]; then
+  sdd_log "INFO" "--force provided (compatibility mode; overwrite is already default)"
+fi
+
+if [ "$YES" -eq 1 ]; then
+  sdd_log "INFO" "--yes provided (compatibility mode; installer is non-interactive)"
 fi
 
 for adapter in $ADAPTERS; do

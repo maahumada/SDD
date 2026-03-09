@@ -1,6 +1,6 @@
 ---
-description: Start a new SDD change (explore + propose)
-agent: sdd-orchestrator
+description: Start change (explore+proposal). Usage: /sdd-new <change-name> -- <prompt>
+agent: SDD
 ---
 
 Route this input through the SDD orchestrator as:
