@@ -1,7 +1,7 @@
 # Task 008: Define Command Contract and Grammar
 
 **Priority**: High  
-**Status**: Pending  
+**Status**: Completed  
 **Depends on**: ADR-001, ADR-002
 
 ---
@@ -39,9 +39,9 @@ Required command definitions:
 
 ## Acceptance Criteria
 
-- [ ] File created at `docs/sdd-command-contract.md`
-- [ ] Canonical grammar includes the `--` separator pattern
-- [ ] Each `/sdd-*` command has required/optional argument table
-- [ ] Validation and error behavior is explicitly documented
-- [ ] At least one realistic usage example per command is included
-- [ ] No references to `engram`, `hybrid`, or `openspec` naming
+- [x] File created at `docs/sdd-command-contract.md`
+- [x] Canonical grammar includes the `--` separator pattern
+- [x] Each `/sdd-*` command has required/optional argument table
+- [x] Validation and error behavior is explicitly documented
+- [x] At least one realistic usage example per command is included
+- [x] No references to `engram`, `hybrid`, or `openspec` naming
